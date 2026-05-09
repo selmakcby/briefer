@@ -31,8 +31,11 @@ Approximate savings on a 5-source pipeline: **~70% fewer tokens per run** with t
 
 ## Install
 
+### Local terminal (Go installed)
+
 ```bash
 go install github.com/selmakcby/briefer/cmd/briefer@latest
+# binary lands in $(go env GOPATH)/bin/briefer — make sure that's on your PATH
 ```
 
 Or build from source:
@@ -41,7 +44,22 @@ Or build from source:
 git clone https://github.com/selmakcby/briefer
 cd briefer
 go build -o briefer ./cmd/briefer
+./briefer pipeline --interests vault/interests.md --history vault/daily
 ```
+
+### Claude Code cloud routine (no Go)
+
+Cloud routines run in a sandboxed Linux env with **no Go toolchain**, so `go install` won't work there. Instead, cross-compile locally and ship the binaries inside your routine repo:
+
+```bash
+# from a clone of this repo
+GOOS=linux GOARCH=amd64 go build -o bin/briefer-linux-amd64 ./cmd/briefer
+GOOS=linux GOARCH=arm64 go build -o bin/briefer-linux-arm64 ./cmd/briefer
+```
+
+Copy `bin/briefer-linux-{amd64,arm64}` into your routine's git repo (anywhere — `bin/` is a clean default). Commit, push. The routine prompt then picks the right binary at runtime based on `uname -m` — see "Routine integration" below for the snippet.
+
+End-to-end reference implementation: **[selmakcby/sabah-asistani](https://github.com/selmakcby/sabah-asistani)** — a private morning-briefing routine that bundles these binaries, calls `briefer pipeline`, hands the survivors to two LLM agents (`summarizer`, `todo-maker`), and posts to Discord. The repo's `routine-prompt.md`, `DEPLOY.md`, and `bin/` show the full deploy pattern.
 
 ## Usage
 
@@ -106,16 +124,51 @@ This is what you call from a Claude Code routine. The output is ready for an LLM
 
 ## Routine integration
 
-Replace the first three stages of your routine prompt with a single shell call:
+Replace the deterministic stages of your routine prompt with a single shell call. The fetcher / filterer / dedupe LLM agents can be deleted entirely — `briefer` does it in zero tokens. The remaining LLM work (summarize, extract todos) keeps its agents. Permissions stay tight: `briefer` only needs `Bash`.
 
-```text
-1. Get today's date in UTC.
-2. Run: briefer pipeline --interests vault/interests.md --history vault/daily > /tmp/items.json
-3. Read /tmp/items.json. Pass to summarizer agent.
-4. ... (rest unchanged)
+### Step 1 — pick the binary at runtime
+
+Bundle both Linux binaries in `bin/` (see "Install → Claude Code cloud routine" above), then in the routine prompt:
+
+```bash
+ARCH=$(uname -m)
+case "$ARCH" in
+  x86_64)  BRIEFER=./bin/briefer-linux-amd64 ;;
+  aarch64) BRIEFER=./bin/briefer-linux-arm64 ;;
+  *) echo "unsupported arch: $ARCH" >&2; exit 1 ;;
+esac
+chmod +x "$BRIEFER"
 ```
 
-The fetcher / filterer / dedupe agents can be deleted entirely. Permissions stay tight — `briefer` only needs `Bash`.
+### Step 2 — run the pipeline
+
+```bash
+$BRIEFER pipeline \
+  --interests vault/interests.md \
+  --history vault/daily \
+  --max-age 24h \
+  > /tmp/items.json
+```
+
+`--max-age 24h` is the default; pass a different duration (e.g. `12h`, `48h`) to widen or narrow the window.
+
+### Step 3 — hand off to the LLM
+
+Read `/tmp/items.json`, pass the `items` array to your summarizer agent. The summarizer no longer drives the fetch — it just reads structured input and writes a briefing.
+
+### Step 4 — network allowlist
+
+Cloud routines run with a network allowlist. The default "Trusted" preset blocks some sources. Use **Custom network** in the routine's environment settings and allow:
+
+```
+news.ycombinator.com    hn.algolia.com
+export.arxiv.org        arxiv.org
+techcrunch.com
+www.anthropic.com
+discord.com             github.com
+```
+
+For a fully working routine prompt you can copy and adapt, see [`sabah-asistani/routine-prompt.md`](https://github.com/selmakcby/sabah-asistani/blob/main/routine-prompt.md).
 
 ## Sources
 
