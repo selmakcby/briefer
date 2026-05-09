@@ -264,9 +264,3 @@ Anthropic doesn't publish a public RSS feed for /news, and the sitemap's `lastmo
 ## License
 
 MIT.
-
-## Related
-
-Built as the V7 follow-up to [@selma.builds](https://www.youtube.com/@selma.builds)' V6 video on the morning-assistant routine. The V6 system used five LLM agents for what `briefer` does in zero — that's the lesson.
-
-The full reference deployment lives at [selmakcby/sabah-asistani](https://github.com/selmakcby/sabah-asistani) — same routine prompt, agent files, vault layout. (Public release pending; the routine prompt is mirrored under [`examples/`](./examples/) here.)
