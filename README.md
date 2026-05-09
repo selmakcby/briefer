@@ -12,24 +12,9 @@ A token-efficient morning briefing pipeline. Built for [Claude Code routines](ht
 
 The premise: in a routine that fetches news, filters it, deduplicates, then summarizes — only the summarization should burn LLM tokens. Everything else is deterministic work that a small Go binary does in ~300 ms.
 
-```console
-$ briefer pipeline --interests vault/interests.md --history vault/daily
-fetched: 70 items
-after max-age (24h0m0s): 39 items
-after filter: 4 items
-after dedupe: 3 items
-{
-  "items": [
-    {
-      "title": "Pentagon releases UFO files on new website",
-      "url": "https://techcrunch.com/2026/05/08/pentagon-releases-ufo-files...",
-      "source": "techcrunch",
-      "published_at": "2026-05-08T15:56:36Z",
-      "snippet": "..."
-    }
-  ]
-}
-```
+<p align="center">
+  <img src="./screenshot.svg" alt="briefer pipeline output" width="100%">
+</p>
 
 Stderr is the live progress trace (4 stages, item count after each). Stdout is structured JSON ready to pipe into an LLM summarizer agent. Full run completes in ~300 ms with zero LLM tokens spent.
 
