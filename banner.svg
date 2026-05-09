@@ -1,135 +1,98 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 600" width="1600" height="600" font-family="'JetBrains Mono', 'Menlo', 'Consolas', monospace">
-  <defs>
-    <!-- Scanline pattern -->
-    <pattern id="scanlines" width="100%" height="3" patternUnits="userSpaceOnUse">
-      <rect width="100%" height="1.5" fill="rgba(0,0,0,0.25)"/>
-    </pattern>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 500" width="1600" height="500" font-family="'JetBrains Mono', 'SF Mono', 'Menlo', 'Consolas', monospace">
+  <!-- Background -->
+  <rect width="1600" height="500" fill="#0a0a0a"/>
 
-    <!-- CRT glow -->
-    <filter id="crtGlow" x="-10%" y="-10%" width="120%" height="120%">
-      <feGaussianBlur stdDeviation="1.2" result="blur"/>
-      <feMerge>
-        <feMergeNode in="blur"/>
-        <feMergeNode in="SourceGraphic"/>
-      </feMerge>
-    </filter>
+  <!-- Top hairline -->
+  <line x1="0" y1="0.5" x2="1600" y2="0.5" stroke="#1f1f1f" stroke-width="1"/>
 
-    <!-- Vignette -->
-    <radialGradient id="vignette" cx="0.5" cy="0.5" r="0.75">
-      <stop offset="50%" stop-color="rgba(0,0,0,0)"/>
-      <stop offset="100%" stop-color="rgba(0,0,0,0.85)"/>
-    </radialGradient>
-
-    <!-- Phosphor green -->
-    <linearGradient id="phosphor" x1="0" y1="0" x2="0" y2="1">
-      <stop offset="0%" stop-color="#a3e635"/>
-      <stop offset="100%" stop-color="#65a30d"/>
-    </linearGradient>
-  </defs>
-
-  <!-- Pure black background -->
-  <rect width="1600" height="600" fill="#000000"/>
-
-  <!-- Faint matrix rain (decoration) -->
-  <g opacity="0.08" font-size="12" fill="#22c55e">
-    <text x="40"   y="60">01</text>
-    <text x="40"   y="120">10</text>
-    <text x="40"   y="180">11</text>
-    <text x="40"   y="240">01</text>
-    <text x="40"   y="300">00</text>
-    <text x="40"   y="360">10</text>
-    <text x="40"   y="420">11</text>
-    <text x="40"   y="480">01</text>
-    <text x="40"   y="540">10</text>
-
-    <text x="1530" y="60">11</text>
-    <text x="1530" y="120">01</text>
-    <text x="1530" y="180">00</text>
-    <text x="1530" y="240">10</text>
-    <text x="1530" y="300">11</text>
-    <text x="1530" y="360">01</text>
-    <text x="1530" y="420">10</text>
-    <text x="1530" y="480">00</text>
-    <text x="1530" y="540">11</text>
-
-    <text x="80"  y="540">$</text>
-    <text x="120" y="540">_</text>
-    <text x="1480" y="60">$</text>
-    <text x="1500" y="60">_</text>
-  </g>
-
-  <!-- Top status bar -->
-  <text x="80" y="50" font-size="13" fill="#525252" letter-spacing="0.2em">
-    ┌─ briefer ──────────────────────────────────────────────────────────────────────────────────────────── selmakcby/briefer · v0.1.0 ─┐
-  </text>
-
-  <!-- Main wordmark — block letters, ASCII style -->
-  <g fill="#a3e635" filter="url(#crtGlow)" font-weight="700">
-    <text x="80" y="170" font-size="100" letter-spacing="-0.04em">▓▓ briefer</text>
-    <text x="80" y="220" font-size="22" fill="#84cc16" letter-spacing="0.2em">&gt; TOKEN-EFFICIENT NEWS PIPELINE</text>
-  </g>
-
-  <!-- Tagline -->
-  <text x="80" y="280" font-size="22" fill="#737373">
-    fetch · filter · dedupe ─ in zero LLM tokens.
-  </text>
-
-  <!-- Terminal output block (the actual flex) -->
-  <g font-size="20">
-    <!-- Prompt line 1 -->
-    <text x="80" y="350">
-      <tspan fill="#525252">[selma@cloud ~/sabah-asistani]</tspan>
-      <tspan fill="#a3e635" dx="8">$</tspan>
-      <tspan fill="#e5e5e5" dx="8">briefer pipeline</tspan>
-      <tspan fill="#737373" dx="6">--interests vault/interests.md</tspan>
+  <!-- LEFT COLUMN -->
+  <g>
+    <!-- Wordmark -->
+    <text x="80" y="220" font-size="120" font-weight="700" letter-spacing="-0.05em">
+      <tspan fill="#fafafa">briefer</tspan><tspan fill="#a3e635">_</tspan>
     </text>
+
+    <!-- Tagline -->
+    <text x="84" y="268" font-size="22" fill="#737373">token-efficient morning briefing pipeline.</text>
+
+    <!-- Accent rule -->
+    <rect x="84" y="312" width="56" height="3" fill="#a3e635"/>
+
+    <!-- Stat line -->
+    <text x="84" y="372" font-size="22">
+      <tspan fill="#a3e635" font-weight="600">~70%</tspan>
+      <tspan fill="#737373" dx="10">fewer tokens</tspan>
+      <tspan fill="#3f3f3f" dx="16">·</tspan>
+      <tspan fill="#a3e635" font-weight="600" dx="16">~30 ms</tspan>
+      <tspan fill="#737373" dx="10">cold start</tspan>
+      <tspan fill="#3f3f3f" dx="16">·</tspan>
+      <tspan fill="#a3e635" font-weight="600" dx="16">0</tspan>
+      <tspan fill="#737373" dx="10">LLM calls</tspan>
+    </text>
+
+    <!-- Footer meta -->
+    <text x="84" y="448" font-size="13" fill="#525252" letter-spacing="0.18em">GO · MIT · @SELMA.BUILDS</text>
+  </g>
+
+  <!-- RIGHT COLUMN — pipeline diagram -->
+  <g font-family="'JetBrains Mono', 'SF Mono', 'Menlo', 'Consolas', monospace">
+    <!-- Section label -->
+    <text x="820" y="108" font-size="11" fill="#525252" letter-spacing="0.28em">SOURCES</text>
+
+    <!-- Source pills -->
+    <g>
+      <rect x="820" y="120" width="140" height="38" rx="4" fill="#101010" stroke="#262626"/>
+      <text x="836" y="144" font-size="14" fill="#d4d4d4">hn</text>
+      <text x="944" y="144" font-size="11" fill="#404040" text-anchor="end">JSON</text>
+
+      <rect x="820" y="166" width="140" height="38" rx="4" fill="#101010" stroke="#262626"/>
+      <text x="836" y="190" font-size="14" fill="#d4d4d4">arxiv</text>
+      <text x="944" y="190" font-size="11" fill="#404040" text-anchor="end">ATOM</text>
+
+      <rect x="820" y="212" width="140" height="38" rx="4" fill="#101010" stroke="#262626"/>
+      <text x="836" y="236" font-size="14" fill="#d4d4d4">techcrunch</text>
+      <text x="944" y="236" font-size="11" fill="#404040" text-anchor="end">RSS</text>
+
+      <rect x="820" y="258" width="140" height="38" rx="4" fill="#101010" stroke="#262626"/>
+      <text x="836" y="282" font-size="14" fill="#d4d4d4">anthropic</text>
+      <text x="944" y="282" font-size="11" fill="#404040" text-anchor="end">XML</text>
+    </g>
+
+    <!-- Merge tree -->
+    <g stroke="#3f3f3f" stroke-width="1" fill="none">
+      <line x1="960" y1="139" x2="1010" y2="139"/>
+      <line x1="960" y1="185" x2="1010" y2="185"/>
+      <line x1="960" y1="231" x2="1010" y2="231"/>
+      <line x1="960" y1="277" x2="1010" y2="277"/>
+      <line x1="1010" y1="139" x2="1010" y2="277"/>
+      <line x1="1010" y1="208" x2="1058" y2="208"/>
+    </g>
+    <polygon points="1058,204 1066,208 1058,212" fill="#3f3f3f"/>
+
+    <!-- Filter box -->
+    <rect x="1066" y="180" width="130" height="56" rx="4" fill="#101010" stroke="#404040"/>
+    <text x="1131" y="208" font-size="15" fill="#fafafa" text-anchor="middle">filter</text>
+    <text x="1131" y="223" font-size="10" fill="#525252" text-anchor="middle" letter-spacing="0.1em">INTERESTS.MD</text>
+
+    <!-- Arrow filter → dedupe -->
+    <line x1="1196" y1="208" x2="1240" y2="208" stroke="#3f3f3f" stroke-width="1"/>
+    <polygon points="1240,204 1248,208 1240,212" fill="#3f3f3f"/>
+
+    <!-- Dedupe box -->
+    <rect x="1248" y="180" width="130" height="56" rx="4" fill="#101010" stroke="#404040"/>
+    <text x="1313" y="208" font-size="15" fill="#fafafa" text-anchor="middle">dedupe</text>
+    <text x="1313" y="223" font-size="10" fill="#525252" text-anchor="middle" letter-spacing="0.1em">LAST 7 DAYS</text>
+
+    <!-- Arrow dedupe → output (accent) -->
+    <line x1="1378" y1="208" x2="1422" y2="208" stroke="#a3e635" stroke-width="1.2"/>
+    <polygon points="1422,204 1430,208 1422,212" fill="#a3e635"/>
 
     <!-- Output -->
-    <text x="80" y="395" fill="#737373">fetched:</text>
-    <text x="280" y="395" fill="#e5e5e5">100 items</text>
+    <text x="1438" y="205" font-size="13" fill="#a3e635">items.json</text>
+    <text x="1438" y="222" font-size="11" fill="#525252">→ summarizer</text>
 
-    <text x="80" y="425" fill="#737373">after filter:</text>
-    <text x="280" y="425" fill="#e5e5e5">32 items</text>
-
-    <text x="80" y="455" fill="#737373">after dedupe:</text>
-    <text x="280" y="455" fill="#a3e635">12 items</text>
-
-    <text x="80" y="500">
-      <tspan fill="#84cc16">✓</tspan>
-      <tspan fill="#e5e5e5" dx="10">ready in 247ms</tspan>
-      <tspan fill="#525252" dx="14">·</tspan>
-      <tspan fill="#fbbf24" dx="14">0 LLM tokens</tspan>
-    </text>
-
-    <text x="80" y="540">
-      <tspan fill="#a3e635">$</tspan>
-      <tspan fill="#a3e635" dx="6">█</tspan>
-    </text>
+    <!-- Footer note under pipeline -->
+    <text x="1486" y="312" font-size="11" fill="#404040" text-anchor="end" letter-spacing="0.18em">DETERMINISTIC · GO · 0 TOKENS</text>
+    <line x1="820" y1="324" x2="1486" y2="324" stroke="#1f1f1f" stroke-width="1"/>
   </g>
-
-  <!-- Right column ASCII pipeline diagram -->
-  <g font-size="14" fill="#525252" letter-spacing="0.05em">
-    <text x="900" y="350">┌──────────────┐</text>
-    <text x="900" y="370">│ hn           │  ┐</text>
-    <text x="900" y="390">├──────────────┤  │</text>
-    <text x="900" y="410">│ arxiv        │  │  ┌──────────┐    ┌──────────┐</text>
-    <text x="900" y="430">├──────────────┤  ┼─→│  filter  │ ─→ │  dedupe  │ ─→ filtered.json</text>
-    <text x="900" y="450">│ techcrunch   │  │  └──────────┘    └──────────┘</text>
-    <text x="900" y="470">├──────────────┤  │</text>
-    <text x="900" y="490">│ anthropic    │  ┘</text>
-    <text x="900" y="510">└──────────────┘</text>
-
-    <text x="900" y="545" fill="#84cc16">[ 4 sources · parallel · go binary · 9MB ]</text>
-  </g>
-
-  <!-- Bottom status -->
-  <text x="80" y="582" font-size="13" fill="#404040" letter-spacing="0.15em">
-    └────────────────────────────────────────────────────────────────────────────── @selma.builds ─ MIT ─────┘
-  </text>
-
-  <!-- Scanlines overlay -->
-  <rect width="1600" height="600" fill="url(#scanlines)" opacity="0.6"/>
-
-  <!-- Vignette overlay -->
-  <rect width="1600" height="600" fill="url(#vignette)"/>
 </svg>
