@@ -1,3 +1,7 @@
+<p align="center">
+  <img src="./banner.svg" alt="briefer — token-efficient news pipeline" width="100%">
+</p>
+
 # briefer
 
 A token-efficient morning briefing pipeline. Built for [Claude Code routines](https://code.claude.com/docs/en/routines), but works as a standalone CLI.
