@@ -1,0 +1,13 @@
+# Binary
+briefer
+
+# Editor / OS
+.DS_Store
+.vscode/
+.idea/
+*.swp
+
+# Test artifacts
+*.test
+coverage.out
+/tmp/
