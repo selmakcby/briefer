@@ -1,5 +1,5 @@
-# Binary
-briefer
+# Binary (only the top-level local build, not cmd/briefer/)
+/briefer
 
 # Editor / OS
 .DS_Store

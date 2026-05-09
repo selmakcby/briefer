@@ -20,7 +20,9 @@ const (
 	// Anthropic's sitemap returns lastmod (last edit), not published date.
 	// We fetch each article page and extract the real publishedOn from the
 	// embedded Next.js JSON, then drop anything older than this window.
-	anthropicMaxAge = 14 * 24 * time.Hour
+	// Aggressive 48h window: morning briefing only cares about last day.
+	// (The pipeline-level --max-age filter clips this further to 24h by default.)
+	anthropicMaxAge = 48 * time.Hour
 	// Bound the number of articles we resolve to keep run time predictable.
 	anthropicMaxResolve = 25
 	// Cap concurrency on per-article fetches to be polite to the host.
